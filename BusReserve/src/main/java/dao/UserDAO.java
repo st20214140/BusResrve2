@@ -17,9 +17,42 @@ public class UserDAO {
 	private final String DB_PASS = "eggfruitMySQL";
 	
 	/**
+	 *  findAll()メソッド<br>
+	 *  Usersテーブルから
+	 * @return
+	 */
+//	public List<UserBean> findAll() {
+//		List<UserBean> empList = new ArrayList<UserBean>();
+//		
+//		// データベースへ接続
+//		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+//			// SELECT文を準備
+//			String sql = "SELECT ID, NAME, AGE FROM EMPLOYEE";
+//			PreparedStatement pStmt = conn.prepareStatement(sql);
+//			
+//			// SELECTを実行し、結果票を取得
+//			ResultSet rs = pStmt.executeQuery();
+//			
+//			// 結果表に格納されたレコードの内容を
+//			// Employeeインスタンスに設定し、ArrayListインスタンスに追加
+//			while (rs.next()) {
+//				String id   = rs.getString("ID");
+//				String name = rs.getString("NAME");
+//				int age = rs.getInt("AGE");
+//				UserBean UserBean = new UserBean(id, name, age);
+//				empList.add(UserBean);
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//		return empList;
+//	}
+	
+	/**
 	 findUser()メソッド<br>
 	 * userName, callNumberからUserIDを検索(SELECT)します。<br>
-	 * @param employeeBean
+	 * @param UserBean
 	 * @return boolean (成功時:True / 失敗時:False)
 	 */
 	public String findUserID(UserBean user) {
@@ -29,7 +62,7 @@ public class UserDAO {
 			String sql = 
 					"SELECT user_id " + 
 					"FROM   users" + 
-					"WHERE name = ? AND call_number = ?";
+					"WHERE user_name = '?' AND call_number = '?'";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			pStmt.setString(1, user.getUserName());
