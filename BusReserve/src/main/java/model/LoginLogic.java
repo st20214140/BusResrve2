@@ -10,23 +10,33 @@ public class LoginLogic {
 	 * @param UserBean(ユーザー情報のユーザ名／電話番号)<br>
 	 * @return true…認証成功 / false…認証失敗
 	 */
-	public boolean excute(UserBean user) {
+	public boolean execute(UserBean user_name,UserBean tel_number) {
+		
+		//UserBeanをインスタンス化
+		UserBean userBean = new UserBean();
+		
+		
+		
+		
 		// UserDAOをインスタンス化
 		UserDAO userDAO = new UserDAO();
+		
 		// ユーザーIDの全リストを取得
-		String userId = userDAO.findElement();
+		String userId = userDAO.findAll();
 		
-		/*findElement
-		 * 
-		 * 
-		 */
-		
-		// 取得したレコードの内容を出力
-		System.out.println("** EmployeeDAOを使った場合 ***");
-		for (EmployeeBean emp : empList) {
-			System.out.println("ID"   + emp.getId());
-			System.out.println("名前" + emp.getName());
-			System.out.println("年齢" + emp.getAge() + "\n");
+			//電話番号とフルネームがデータベースに存在したらtrue
+			if(userBean.getUser_name()!=null && userBean.getTel_number()!=null) {
+				return true;
+	
+			
+			
+			/*
+			 * 例
+			 * public boolean execute(UserBEan user){
+			 * /パスワードが1234の時はtrue if(user.getpass().equals("1234")) {
+			 * return false; 
+			 * }
+			 */
 		}
 	}
 }
