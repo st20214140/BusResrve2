@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.UserBean;
 
@@ -21,33 +23,33 @@ public class UserDAO {
 	 *  Usersテーブルから
 	 * @return
 	 */
-//	public List<UserBean> findAll() {
-//		List<UserBean> empList = new ArrayList<UserBean>();
-//		
-//		// データベースへ接続
-//		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
-//			// SELECT文を準備
-//			String sql = "SELECT ID, NAME, AGE FROM EMPLOYEE";
-//			PreparedStatement pStmt = conn.prepareStatement(sql);
-//			
-//			// SELECTを実行し、結果票を取得
-//			ResultSet rs = pStmt.executeQuery();
-//			
-//			// 結果表に格納されたレコードの内容を
-//			// Employeeインスタンスに設定し、ArrayListインスタンスに追加
-//			while (rs.next()) {
-//				String id   = rs.getString("ID");
-//				String name = rs.getString("NAME");
-//				int age = rs.getInt("AGE");
-//				UserBean UserBean = new UserBean(id, name, age);
-//				empList.add(UserBean);
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			return null;
-//		}
-//		return empList;
-//	}
+	public List<UserBean> findAll() {
+		List<UserBean> userList = new ArrayList<UserBean>();
+		
+		// データベースへ接続
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+			// SELECT文を準備
+			String sql = "SELECT user_id, user_name, call_number FROM users";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			
+			// SELECTを実行し、結果票を取得
+			ResultSet rs = pStmt.executeQuery();
+			
+			// 結果表に格納されたレコードの内容を
+			// Employeeインスタンスに設定し、ArrayListインスタンスに追加
+			while (rs.next()) {
+				String userId   = rs.getString("user_id");
+				String userName = rs.getString("user_name");
+				String callNumber = rs.getString("call_number");
+				UserBean UserBean = new UserBean(userId, userName, callNumber);
+				userList.add(UserBean);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return userList;
+	}
 	
 	/**
 	 findUser()メソッド<br>
@@ -55,14 +57,14 @@ public class UserDAO {
 	 * @param UserBean
 	 * @return boolean (成功時:True / 失敗時:False)
 	 */
-	public String findUserID(UserBean user) {
+	public List<UserBean> findUserID(UserBean user) {
+		List<UserBean> userList = new ArrayList<UserBean>();
+		
 		// DB接続
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 			// SELECT文を準備
 			String sql = 
-					"SELECT user_id " + 
-					"FROM   users" + 
-					"WHERE user_name = '?' AND call_number = '?'";
+					"SELECT user_id FROM users WHERE user_name = '?' AND call_number = '?'";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			pStmt.setString(1, user.getUserName());
@@ -71,7 +73,13 @@ public class UserDAO {
 			// SELECTを実行し、結果票を取得
 			ResultSet rs = pStmt.executeQuery();
 			
-			return rs.getString("user_id");
+			while (rs.next()) {
+				String userId   = rs.getString("user_id");
+				UserBean userBean = new UserBean(userId);
+				userList.add(userBean);
+			}
+			
+			return userList;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
