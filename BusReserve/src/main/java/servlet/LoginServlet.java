@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.LoginLogic;
+import model.UserBean;
 import utl.Check;
 /**
  * Servlet implementation class LoginServlet
@@ -17,6 +19,9 @@ import utl.Check;
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+//	UserBeanのインスタンス生成
+	UserBean User = new User(user_name,tel_number);
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -43,6 +48,7 @@ public class LoginServlet extends HttpServlet {
 		String telNo = null;
 		boolean regFlag = false; // 登録判別フラグ (true: 登録 / false: 確認)
 
+		
 		// リクエストパラメータの取得
 		try {
 			// 確認
@@ -80,10 +86,22 @@ public class LoginServlet extends HttpServlet {
 
 		// エラーメッセージの埋め込み
 		request.setAttribute("error_msg", error_msg);
-
-		// ログイン結果画面にフォワード
-		RequestDispatcher dispatcher = request.getRequestDispatcher(fPath);
-		dispatcher.forward(request, response);
+		
+		//ログイン判定処理
+				LoginLogic LoginLogic = new LoginLogic();
+				boolean isLogin = LoginLogic.execute(User);
+				
+				//ログイン判定処理
+				if(isLogin==true) {
+					// ログイン結果画面にフォワード(成功)
+					RequestDispatcher dispatcher = request.getRequestDispatcher(fPath);
+					dispatcher.forward(request, response);
+				}else {
+					// ログイン結果画面にフォワード(失敗)
+								RequestDispatcher dispatcher = request.getRequestDispatcher(fPath);
+								dispatcher.forward(request, response);
+				}
+				
 	}
 
 }

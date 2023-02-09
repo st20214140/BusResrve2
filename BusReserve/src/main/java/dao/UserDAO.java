@@ -25,6 +25,7 @@ public class UserDAO {
 	 */
 	public List<UserBean> findAll() {
 		List<UserBean> userList = new ArrayList<UserBean>();
+<<<<<<< HEAD
 		
 		// データベースへ接続
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
@@ -69,13 +70,65 @@ public class UserDAO {
 
 			pStmt.setString(1, user.getUserName());
 			pStmt.setString(2, user.getCallNumber());
+=======
+		
+		// データベースへ接続
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+			// SELECT文を準備
+			String sql = "SELECT user_id, user_name, call_number FROM users";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+>>>>>>> Loginlogic作成
+			
+			// SELECTを実行し、結果票を取得
+			ResultSet rs = pStmt.executeQuery();
+			
+<<<<<<< HEAD
+			while (rs.next()) {
+				String userId   = rs.getString("user_id");
+				UserBean userBean = new UserBean(userId);
+=======
+			// 結果表に格納されたレコードの内容を
+			// Employeeインスタンスに設定し、ArrayListインスタンスに追加
+			while (rs.next()) {
+				String userId   = rs.getString("user_id");
+				String userName = rs.getString("user_name");
+				String callNumber = rs.getString("call_number");
+				UserBean UserBean = new UserBean(user_id, user_name, tel_number);
+				userList.add(UserBean);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return userList;
+	}
+	
+	/**
+	 findUser()メソッド<br>
+	 * userName, callNumberからUserIDを検索(SELECT)します。<br>
+	 * @param UserBean
+	 * @return boolean (成功時:True / 失敗時:False)
+	 */
+	public List<UserBean> findUserID(UserBean user) {
+		List<UserBean> userList = new ArrayList<UserBean>();
+		
+		// DB接続
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+			// SELECT文を準備
+			String sql = 
+					"SELECT user_id FROM users WHERE user_name = '?' AND call_number = '?'";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+
+			pStmt.setString(1, user.getUser_name());
+			pStmt.setString(2, user.getTel_number());
 			
 			// SELECTを実行し、結果票を取得
 			ResultSet rs = pStmt.executeQuery();
 			
 			while (rs.next()) {
 				String userId   = rs.getString("user_id");
-				UserBean userBean = new UserBean(userId);
+				UserBean userBean = new UserBean(user_id);
+>>>>>>> Loginlogic作成
 				userList.add(userBean);
 			}
 			
@@ -88,7 +141,11 @@ public class UserDAO {
 	
 	public boolean insert(UserBean user) {
 		// データベースへ接続
+<<<<<<< HEAD
 		boolean result;
+=======
+		String result;
+>>>>>>> Loginlogic作成
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 			
 			// INSERT文を接続
@@ -99,16 +156,24 @@ public class UserDAO {
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			
 			// INSERT文の中の「?」に使用する値をセットし、SQLを組み立て
+<<<<<<< HEAD
 			pStmt.setString(1, user.getUserName());
 			pStmt.setString(2, user.getCallNumber());
 			
 			// INSER文を実行し、実行結果をresultに格納
 			result = true;
+=======
+			pStmt.setString(1, user.getUser_name());
+			pStmt.setString(2, user.getTel_number());
+			
+			// INSER文を実行し、実行結果をresultに格納
+			result = findUserID(user);
+>>>>>>> Loginlogic作成
 			
 		} catch (SQLException e) {
 			System.out.println("!! レコードは格納(INSERT)されませんでした。");
 			e.printStackTrace();
-			return false;
+			return null;
 		}
 		
 		System.out.println("!! レコードは正常に追加(INSERT)されました。");
