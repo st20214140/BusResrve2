@@ -17,7 +17,7 @@ public class UserDAO {
 	private final String JDBC_URL = "jdbc:mysql://fukushima-pc/BusReserve";
 	private final String DB_USER = "teamE";
 	private final String DB_PASS = "eggfruitMySQL";
-	
+
 	/**
 	 *  findAll()メソッド<br>
 	 *  Usersテーブルから
@@ -25,20 +25,20 @@ public class UserDAO {
 	 */
 	public List<UserBean> findAll() {
 		List<UserBean> userList = new ArrayList<UserBean>();
-		
+
 		// データベースへ接続
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 			// SELECT文を準備
 			String sql = "SELECT user_id, user_name, call_number FROM users";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			
+
 			// SELECTを実行し、結果票を取得
 			ResultSet rs = pStmt.executeQuery();
-			
+
 			// 結果表に格納されたレコードの内容を
 			// Employeeインスタンスに設定し、ArrayListインスタンスに追加
 			while (rs.next()) {
-				String userId   = rs.getString("user_id");
+				String userId = rs.getString("user_id");
 				String userName = rs.getString("user_name");
 				String callNumber = rs.getString("call_number");
 				UserBean UserBean = new UserBean(userId, userName, callNumber);
@@ -50,7 +50,7 @@ public class UserDAO {
 		}
 		return userList;
 	}
-	
+
 	/**
 	 findUser()メソッド<br>
 	 * userName, callNumberからUserIDを検索(SELECT)します。<br>
@@ -59,59 +59,61 @@ public class UserDAO {
 	 */
 	public List<UserBean> findUserID(UserBean user) {
 		List<UserBean> userList = new ArrayList<UserBean>();
-		
+
 		// DB接続
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 			// SELECT文を準備
-			String sql = 
-					"SELECT user_id FROM users WHERE user_name = '?' AND call_number = '?'";
+			String sql = "SELECT user_id FROM users WHERE user_name = '?' AND call_number = '?'";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			pStmt.setString(1, user.getUserName());
 			pStmt.setString(2, user.getCallNumber());
-			
+
 			// SELECTを実行し、結果票を取得
 			ResultSet rs = pStmt.executeQuery();
-			
+
 			while (rs.next()) {
-				String userId   = rs.getString("user_id");
+				String userId = rs.getString("user_id");
 				UserBean userBean = new UserBean(userId);
 				userList.add(userBean);
 			}
-			
+
 			return userList;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
+
 	public boolean insert(UserBean user) {
 		// データベースへ接続
-		boolean result;
+		int result;
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
-			
+
 			// INSERT文を接続
-			String sql = 
-					"INSERT INTO users(user_id, user_name, call_number)"
+			String sql = "INSERT INTO users(user_id, user_name, call_number)"
 					+ "SELECT COALESCE(MAX(user_id)+1,1), ?, ?"
 					+ "FROM users";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			
+
 			// INSERT文の中の「?」に使用する値をセットし、SQLを組み立て
 			pStmt.setString(1, user.getUserName());
 			pStmt.setString(2, user.getCallNumber());
-			
 			// INSER文を実行し、実行結果をresultに格納
-			result = true;
-			
+			result = pStmt.executeUpdate();
+
+			// 成功すると1が戻るなで、1ではない時失敗
+			if (result != 1) {
+				return false;
+			}
+
 		} catch (SQLException e) {
 			System.out.println("!! レコードは格納(INSERT)されませんでした。");
 			e.printStackTrace();
 			return false;
 		}
-		
+
 		System.out.println("!! レコードは正常に追加(INSERT)されました。");
-		return result;
+		return true;
 	}
 }
