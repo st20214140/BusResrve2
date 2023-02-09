@@ -20,7 +20,7 @@ public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 //	UserBeanのインスタンス生成
-	UserBean User = new User(user_name,tel_number);
+	UserBean UserBean = new UserBean(user_name,tel_number);
 	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -50,7 +50,7 @@ public class LoginServlet extends HttpServlet {
 
 		//ログイン判定処理
 		LoginLogic LoginLogic = new LoginLogic();
-		boolean isLogin = LoginLogic.execute(User);
+		boolean isLogin = LoginLogic.execute(UserBean);
 		
 		//ログイン判定処理
 		if(isLogin==true) {

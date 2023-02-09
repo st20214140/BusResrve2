@@ -10,14 +10,7 @@ public class LoginLogic {
 	 * @param UserBean(ユーザー情報のユーザ名／電話番号)<br>
 	 * @return true…認証成功 / false…認証失敗
 	 */
-	public boolean execute(UserBean user_name,UserBean tel_number) {
-		
-		//UserBeanをインスタンス化
-		UserBean userBean = new UserBean();
-		
-		
-		
-		
+	public boolean execute(UserBean user_bean) {
 		// UserDAOをインスタンス化
 		UserDAO userDAO = new UserDAO();
 		
