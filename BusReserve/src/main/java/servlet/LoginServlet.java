@@ -48,6 +48,20 @@ public class LoginServlet extends HttpServlet {
 		String telNo = null;
 		boolean regFlag = false; // 登録判別フラグ (true: 登録 / false: 確認)
 
+		//ログイン判定処理
+		LoginLogic LoginLogic = new LoginLogic();
+		boolean isLogin = LoginLogic.execute(User);
+		
+		//ログイン判定処理
+		if(isLogin==true) {
+			// ログイン結果画面にフォワード(成功)
+			RequestDispatcher dispatcher = request.getRequestDispatcher(/WEB-INF/jsp/register.jsp);
+			dispatcher.forward(request, response);
+		}else {
+			// ログイン結果画面にフォワード(失敗)
+						RequestDispatcher dispatcher = request.getRequestDispatcher(/WEB-INF/jsp/verification.jsp);
+						dispatcher.forward(request, response);
+		}
 		
 		// リクエストパラメータの取得
 		try {
