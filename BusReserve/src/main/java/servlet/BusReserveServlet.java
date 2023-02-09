@@ -46,7 +46,7 @@ public class BusReserveServlet extends HttpServlet {
 			dispatcher.forward(request, response);
 		}else {
 			/*予約済みと表示*/
-			RequestDispatcher dispatcher = request.getRequestDispatcher("");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/Reserved.jsp");
 			dispatcher.forward(request, response);
 		}
 		
