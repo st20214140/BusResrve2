@@ -21,7 +21,7 @@ public class ReserveDAO {
 		
 		try(Connection conn = DriverManager.getConnection(JDBC_URL,DB_USER,DB_PASS)){
 			
-			String sql = "SELECT reserve_id,name,num_people,user_id,NAME,AGE FROM reserves";
+			String sql = "SELECT reserve_id,name,num_people,user_id,name,num_people FROM reserves";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			
 			ResultSet rs = pStmt.executeQuery();
