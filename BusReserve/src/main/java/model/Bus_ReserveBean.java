@@ -1,50 +1,46 @@
 package model;
 
+ 
+
 public class Bus_ReserveBean {
-	private int flight_number;
-	private String user_id;
-	private String seat_number;
-	private int reserved_flag;
-	private String price_id;
-	
-	public Bus_ReserveBean(int flight_number, String user_id, String seat_number, int reserved_flag, String price_id) {
-		this.flight_number = flight_number;
-		this.user_id = user_id;
-		this.seat_number = seat_number;
-		this.reserved_flag = reserved_flag;
-		this.price_id = price_id;
-	}
-	
-	public int getFlight_number() {
-		return flight_number;
-	}
-	public void setFlight_number(int flight_number) {
-		this.flight_number = flight_number;
-	}
-	public String getUser_id() {
-		return user_id;
-	}
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
-	}
-	public String getSeat_number() {
-		return seat_number;
-	}
-	public void setSeat_number(String seat_number) {
-		this.seat_number = seat_number;
-	}
-	public int getReserved_flag() {
-		return reserved_flag;
-	}
-	public void setReserved_flag(int reserved_flag) {
-		this.reserved_flag = reserved_flag;
-	}
-	public String getPrice_id() {
-		return price_id;
-	}
-	public void setPrice_id(String price_id) {
-		this.price_id = price_id;
-	}
-
-
+    private String flightNumber;
+    private String userId;
+    private String seatNumber;
+    private String priceId;
+    
+    public Bus_ReserveBean(String flightNumber, String userId, String seatNumber, String priceId) {
+        this.flightNumber = flightNumber;
+        this.userId = userId;
+        this.seatNumber = seatNumber;
+        this.priceId = priceId;
+    }
+    
+    public Bus_ReserveBean(String seatNumber) {
+    	this.seatNumber = seatNumber;
+    }
+    
+    public String getFlightNumber() {
+        return flightNumber;
+    }
+    public void setFlightNumber(String flightNumber) {
+        this.flightNumber = flightNumber;
+    }
+    public String getUserId() {
+        return userId;
+    }
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+    public String getSeatNumber() {
+        return seatNumber;
+    }
+    public void setSeatNumber(String seatNumber) {
+        this.seatNumber = seatNumber;
+    }
+    public String getPriceId() {
+        return priceId;
+    }
+    public void setPriceId(String priceId) {
+        this.priceId = priceId;
+    }
 }

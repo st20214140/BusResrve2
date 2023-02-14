@@ -8,7 +8,7 @@
 <title>バス</title>
 </head>
 <body>
-<form action="http://localhost:8080/bus/bin"action="http://localhost:8080/bus/seet" method="POST">
+<form action="RegisterServlet"  method="POST">
 <p>日付</p>
 <input type="date" name="date">
 <br>

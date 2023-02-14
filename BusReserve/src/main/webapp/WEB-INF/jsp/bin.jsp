@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ page import="model.RegisterBean" %>
+
+<% RegisterBean rb = (RegisterBean) session.getAttribute("rb"); %>
     <%
     String place = (String)session.getAttribute("place");
     String HC = (String)session.getAttribute("HC");
@@ -28,11 +32,11 @@
 <body>
 
 	<h3>予約便</h3>
-	<h3>場所 [<%=Place%>]</h3>
-	<h3>人数　<%=HC%></h3>
-	<h3>日付<%=date%></h3>
+	<h3>場所 [<%=rb.getPlace()%>]</h3>
+	<h3>人数　<%=rb.getHC()%></h3>
+	<h3>日付<%=rb.getDate()%></h3>
 	
-	<form action="http://localhost:8080/BusReserve/seet" method="POST">
+	<form action="seet3.jsp" method="POST">
 	<h4 >1便</h4>
 	<dv class="info info1" name="Time" value="06:00~10:00"><h4>06:00~10:00</h4>
 	<a>空席：<%=40-air %></a>
@@ -41,7 +45,7 @@
 	</dv>
 	</form>
 	
-	<form action="http://localhost:8080/BusReserve/seet" method="POST">
+	<form action="seet3.jsp" method="POST">
 	<h4>2便</h4>
 	<dv class="info2"  value="10:00~14:00"><h4>10:00~14:00</h4>
 	<a>空席：<%=40-air %></a>
@@ -50,7 +54,7 @@
 	</dv>
 	</form>
 	
-	<form action="http://localhost:8080/BusReserve/seet" method="POST">
+	<form action="seet3.jsp" method="POST">
 	<h4>3便</h4>
 	<dv class="info3" value="14:00~18:00"><h4>14:00~18:00</h4>
 	<a>空席：<%=40-air %></a>
@@ -59,7 +63,7 @@
 	</dv>
 	</form>
 	
-	<form action="http://localhost:8080/BusReserve/seet" method="POST">
+	<form action="seet3.jsp" method="POST">
 	<h4>4便</h4>
 	<dv class="info4" value="18:00~22:00"><h4>18:00~22:00</h4>
 	<a>空席：<%=40-air %></a>
@@ -68,7 +72,7 @@
 	</dv>
 	</form>
 	
-	<form action="http://localhost:8080/BusReserve/seet" method="POST">
+	<form action="seet3.jsp" method="POST">
 	<h4>5便</h4>
 	<dv class="info5" value="22:00~02:00"><h4>22:00~02:00</h4>
 	<a>空席：<%=40-air %></a>
